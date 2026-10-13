@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Minh An Cheat</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090d16;color:#f4f7ff;font-family:Arial,sans-serif;padding:20px}
+main{max-width:450px;margin:auto}
+.card{background:#141c2b;border:1px solid #27364c;border-radius:18px;padding:20px}
+h1{color:#ff354b;text-align:center;font-size:28px}
+.sub{text-align:center;color:#9eacc3;margin-bottom:24px}
+label{display:block;margin:18px 0 9px;font-weight:bold}
+input,button{width:100%;padding:13px;border-radius:10px}
+input[type=color]{height:55px;background:#202b3d;border:0}
+input[type=range]{accent-color:#ff354b}
+input[type=file]{background:#202b3d;color:white}
+button{border:0;background:#f02d46;color:white;font-weight:bold;font-size:15px;margin-top:15px}
+#preview{height:130px;border:2px dashed #43516a;border-radius:14px;display:grid;place-items:center;margin-top:15px}
+#outline{width:150px;height:42px;border:4px solid #ff2020;border-radius:10px}
+.note{font-size:12px;color:#a8b5c9;line-height:1.6;margin-top:18px}
+#status{font-size:13px;line-height:1.5;margin-top:14px}
+</style>
+</head>
+<body>
+<main>
+<div class="card">
+<h1>MINH AN CHEAT</h1>
+<div class="sub">GUN OUTLINE COLOR TOOL</div>
+
+<label>🎨 Chọn màu viền súng</label>
+<input type="color" id="color" value="#ff2020">
+
+<label>📏 Độ dày viền: <span id="thickText">4</span> px</label>
+<input type="range" id="thick" min="1" max="20" value="4">
+
+<div id="preview"><div id="outline"></div></div>
+
+<label>📁 Chọn file tài nguyên súng</label>
+<input type="file" id="file">
+
+<button id="export">TẠO FILE CHỈNH SỬA</button>
+<div id="status">Chưa chọn file.</div>
+
+<div class="note">
+Công cụ xem trước màu và độ dày viền. File game không thể đổi màu thật chỉ bằng cách đổi tên hoặc thêm byte tùy ý. Muốn chỉnh trực tiếp cần xác định texture/material phù hợp. File gốc sẽ không bị ghi đè.
+</div>
+</div>
+</main>
+<script>
+const color=document.getElementById('color');
+const thick=document.getElementById('thick');
+const outline=document.getElementById('outline');
+
+function preview(){
+ outline.style.borderColor=color.value;
+ outline.style.borderWidth=thick.value+'px';
+ document.getElementById('thickText').textContent=thick.value;
+}
+color.oninput=preview;
+thick.oninput=preview;
+
+document.getElementById('export').onclick=()=>{
+ const f=document.getElementById('file').files[0];
+ const status=document.getElementById('status');
+ if(!f){
+  status.textContent='Vui lòng chọn file trước.';
+  return;
+ }
+ status.textContent=
+ 'Đã chọn '+f.name+'. Màu viền: '+color.value+
+ ', độ dày: '+thick.value+' px. Chưa xuất file vì cần xác định dữ liệu texture/material trong file gốc.';
+};
+preview();
+</script>
+</body>
+</html>
